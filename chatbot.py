@@ -1,6 +1,5 @@
 import streamlit as st
 import os
-import fitz
 from PIL import Image
 from tempfile import TemporaryDirectory
 from langchain.document_loaders import PyPDFLoader
