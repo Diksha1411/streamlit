@@ -60,11 +60,15 @@ class ChatbotApp:
             return
         file = st.file_uploader("Upload PDF", key="pdf_uploader", type=["pdf"])
         if file is not None:
-            doc = fitz.open(file.name)
-            page = doc[0]  # You might want to specify the page number here
-            pix = page.get_pixmap(matrix=fitz.Matrix(300/72, 300/72))
-            image = Image.frombytes('RGB', [pix.width, pix.height], pix.samples)
-            st.image(image)
+            # Create a temporary file
+            with tempfile.NamedTemporaryFile(suffix=".pdf") as out_pdf:
+                out_pdf.write(file.getvalue())
+                out_pdf.flush()
+                
+               # Convert the first page of the PDF to an image
+                images = convert_from_path(out_pdf.name)
+                if images:
+                    st.image(images[0])
 
 def main():
     st.title("Streamlit Chatbot with PDF Search")
