@@ -2,4 +2,3 @@ langchain
 pypdf
 openai
 chromadb
-sqlite3
